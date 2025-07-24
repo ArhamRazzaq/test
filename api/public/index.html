@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8" /><title>Viva Smart Checkout</title></head>
+<body>
+  <h1>Viva Smart Checkout Demo</h1>
+  <button onclick="payNow()">Pay €10</button>
+  <script>
+    async function payNow() {
+      const res = await fetch("/api/create-order", { method: "POST" });
+      const data = await res.json();
+      if (data.redirectUrl) window.location.href = data.redirectUrl;
+      else alert("Error in checkout");
+    }
+  </script>
+</body>
+</html>
