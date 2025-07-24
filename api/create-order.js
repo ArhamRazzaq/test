@@ -1,7 +1,7 @@
 export default async function handler(req, res) {
   if (req.method !== "POST") return res.status(405).end();
 
-  const apiKey = "demo-1l3z9y1n-4n7e-4sm2-9765-8a2ec5aa25f6"; // DEMO key
+  const apiKey = "demo-1l3z9y1n-4n7e-4sm2-9765-8a2ec5aa25f6";
   const sourceCode = "Default";
 
   try {
@@ -11,13 +11,15 @@ export default async function handler(req, res) {
         method: "POST",
         headers: {
           Authorization: `Bearer ${apiKey}`,
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           amount: 1000,
           sourceCode,
-          customer: { email: "demo@example.com" }
-        })
+          customer: {
+            email: "demo@example.com",
+          },
+        }),
       }
     );
 
@@ -25,7 +27,7 @@ export default async function handler(req, res) {
     if (data.checkoutUrl) {
       res.status(200).json({ redirectUrl: data.checkoutUrl });
     } else {
-      res.status(400).json({ error: "Invalid response", raw: data });
+      res.status(400).json({ error: "No checkoutUrl returned", raw: data });
     }
   } catch (err) {
     res.status(500).json({ error: err.message });
